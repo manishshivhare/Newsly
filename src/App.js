@@ -9,7 +9,7 @@ function App() {
     const fetchNews = async () => {
       try {
         const response = await axios.get(
-          `https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=bee750c6e338ff8b54f2b031b0dc6d14`
+          `https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=${process.env.REACT_APP_API_KEY}`
         );
         setNews(response.data.articles); // Assuming response contains `articles` array
       } catch (error) {
@@ -28,7 +28,7 @@ function App() {
           headline={article.title}
           img={article.image}
           description={article.description}
-          link = {article.url}
+          link={article.url}
         />
       ))}
     </div>
