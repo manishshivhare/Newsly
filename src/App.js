@@ -28,6 +28,7 @@ function App() {
           headline={article.title}
           img={article.image}
           description={article.description}
+          link = {article.url}
         />
       ))}
     </div>
