@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Card from "./components/CardBlock.jsx";
 import Header from "./components/Header.jsx";
 
@@ -8,7 +8,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const handleLoadMore = async () => {
+  const handleLoadMore = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get(
@@ -21,11 +21,11 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page]); // `page` is the dependency of useCallback
 
   useEffect(() => {
     handleLoadMore();
-  }, []);
+  }, [handleLoadMore]); // No warning now as the handleLoadMore reference is stable
 
   return (
     <div>
