@@ -5,15 +5,17 @@ import Header from "./components/Header.jsx";
 
 function App() {
   const [news, setNews] = useState([]);
-
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const fetchNews = async () => {
+  const handleLoadMore = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(
-        `https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=${process.env.REACT_APP_API_KEY}`
+        `https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`
       );
       setNews((prevNews) => [...prevNews, ...response.data.articles]);
+      setPage((prevPage) => prevPage + 1);
     } catch (error) {
       console.error("Error fetching news:", error);
     } finally {
@@ -21,20 +23,15 @@ function App() {
     }
   };
 
-  const handleLoadMore = async () => {
-    setLoading(true);
-    fetchNews();
-  };
-
   useEffect(() => {
-    setLoading(true);
-    fetchNews();
+    handleLoadMore();
   }, []);
 
   return (
     <div>
       <Header />
-      <div className="container mx-auto p-4 grid grid-cols-1 gap-6 w-[800px]">
+      <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 gap-6">
+        {/* Display news articles */}
         {news.map((article, index) => (
           <Card
             key={index}
@@ -48,6 +45,7 @@ function App() {
           />
         ))}
       </div>
+      {/* Load More Button */}
       <div className="text-center py-4">
         <button
           onClick={handleLoadMore}

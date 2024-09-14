@@ -5,26 +5,26 @@ const Card = (props) => {
   const formattedDate = dayjs(date).format("DD MMM YYYY [at] HH:mm");
 
   return (
-    <div className="flex flex-col sm:flex-row bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 transition-transform transform ">
-      {/* Image on top for mobile, on left for larger screens */}
-
-      <img
-        className=" flex-shrink-0 sm:w-48 w-full rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none w-full sm:h-full object-cover h-48"
-        src={props.img}
-        alt={props.headline || "News image"}
-      />
-
+    <div className="flex flex-col lg:flex-row bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 transition-transform transform  max-w-full lg:max-w-4xl mx-auto">
+      {/* Image on top for mobile, on left for large screens */}
+      <a href={props.link} className="flex-shrink-0 lg:w-64 w-full">
+        <img
+          className="rounded-t-lg lg:rounded-l-lg lg:rounded-tr-none w-full lg:h-full object-cover h-64"
+          src={props.img}
+          alt={props.headline || "News image"}
+        />
+      </a>
       {/* Content */}
-      <div className="p-6 flex-1">
+      <div className="p-4 lg:p-6 flex-1">
         <a href={props.link} aria-label={props.headline}>
-          <h5 className="mb-2 text-lg sm:text-xl font-bold tracking-tight text-gray-700 dark:text-white">
+          <h5 className="mb-2 text-xl lg:text-2xl font-bold tracking-tight text-gray-700 dark:text-white">
             {props.headline}
           </h5>
         </a>
-        <div className="text-sm text-gray-400 mb-2">
+        <div className="text-xs lg:text-sm text-gray-400 mb-2">
           Published on {formattedDate}
         </div>
-        <p className="mb-4 text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        <p className="mb-4 text-sm lg:text-base leading-relaxed text-gray-500 dark:text-gray-400">
           {props.description}
         </p>
         <a
@@ -49,7 +49,7 @@ const Card = (props) => {
           </svg>
         </a>
       </div>
-      <div className="absolute bottom-2 right-2 text-sm text-gray-500 dark:text-gray-400">
+      <div className="absolute bottom-2 right-2 text-xs lg:text-sm text-gray-500 dark:text-gray-400">
         <span>Source-</span>
         <a
           href={props.sourceLink}
