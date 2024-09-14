@@ -2,36 +2,44 @@ import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
 import Card from "./components/CardBlock.jsx";
 import Header from "./components/Header.jsx";
+import dayjs from "dayjs";
 
 function App() {
   const [news, setNews] = useState([]);
-  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [customDate, setCustomDate] = useState(
+    dayjs().format("YYYY-MM-DDThh:mm:ss[Z]")
+  );
 
-  const handleLoadMore = useCallback(async () => {
-    setLoading(true);
+  const fetchNews = useCallback(async (date) => {
     try {
-      const response = await axios.get(
-        `https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&page=${page}&apikey=${process.env.REACT_APP_API_KEY}`
+      setLoading(true);
+      const { data } = await axios.get(
+        `https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&to=${date}&apikey=${process.env.REACT_APP_API_KEY}`
       );
-      setNews((prevNews) => [...prevNews, ...response.data.articles]);
-      setPage((prevPage) => prevPage + 1);
+      setNews((prevNews) => [...prevNews, ...data.articles]);
     } catch (error) {
       console.error("Error fetching news:", error);
     } finally {
       setLoading(false);
     }
-  }, [page]); // `page` is the dependency of useCallback
+  }, []);
+
+  const handleLoadMore = useCallback(() => {
+    const newDate = dayjs(customDate)
+      .subtract(10, "days")
+      .format("YYYY-MM-DDThh:mm:ss[Z]");
+    setCustomDate(newDate);
+  }, [customDate]);
 
   useEffect(() => {
-    handleLoadMore();
-  }, [handleLoadMore]); // No warning now as the handleLoadMore reference is stable
+    fetchNews(customDate);
+  }, [customDate, fetchNews]);
 
   return (
     <div>
       <Header />
       <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 gap-6">
-        {/* Display news articles */}
         {news.map((article, index) => (
           <Card
             key={index}
@@ -45,7 +53,6 @@ function App() {
           />
         ))}
       </div>
-      {/* Load More Button */}
       <div className="text-center py-4">
         <button
           onClick={handleLoadMore}
