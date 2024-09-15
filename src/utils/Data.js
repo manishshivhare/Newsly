@@ -55,3 +55,22 @@ export const languages = [
   "Telugu",
   "Ukrainian",
 ];
+
+export const newsCategories = [
+  "World",
+  "Politics",
+  "Business",
+  "Technology",
+  "Science",
+  "Health",
+  "Entertainment",
+  "Sports",
+  "Environment",
+  "Education",
+  "Travel",
+  "Lifestyle",
+  "Opinion",
+  "Culture",
+  "Food"
+];
+
