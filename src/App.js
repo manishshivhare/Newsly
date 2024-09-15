@@ -57,7 +57,7 @@ function App() {
         <button
           onClick={handleLoadMore}
           disabled={loading}
-          className="px-6 py-3 bg-[#53c1c0] text-white rounded-lg hover:bg-[#45b2a5] focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out text-lg"
+          className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#53c1c0] rounded-md hover:bg-[#45b2a5] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-offset-gray-800"
         >
           {loading ? "Loading..." : "Load More"}
         </button>
