@@ -4,6 +4,7 @@ import Card from "./components/CardBlock.jsx";
 import Header from "./components/Header.jsx";
 import dayjs from "dayjs";
 import CategoryBar from "./components/CategoryBar.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
   const [news, setNews] = useState([]);
@@ -40,7 +41,7 @@ function App() {
   return (
     <div>
       <Header />
-      <CategoryBar/>
+      <CategoryBar />
       <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 gap-6">
         {news.map((article, index) => (
           <Card
@@ -64,6 +65,7 @@ function App() {
           {loading ? "Loading..." : "Load More"}
         </button>
       </div>
+      <Footer />
     </div>
   );
 }
