@@ -5,6 +5,7 @@ import Header from "./components/Header.jsx";
 import dayjs from "dayjs";
 import CategoryBar from "./components/CategoryBar.jsx";
 import Footer from "./components/Footer.jsx";
+import ScrollToTopButton from "./components/ScrollToTop.jsx";
 
 function App() {
   const [news, setNews] = useState([]);
@@ -65,6 +66,7 @@ function App() {
           {loading ? "Loading..." : "Load More"}
         </button>
       </div>
+      <ScrollToTopButton />
       <Footer />
     </div>
   );
