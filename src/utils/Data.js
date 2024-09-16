@@ -57,20 +57,22 @@ export const languages = [
 ];
 
 export const newsCategories = [
-  "World",
-  "Politics",
+  "All",
   "Business",
-  "Technology",
-  "Science",
-  "Health",
-  "Entertainment",
-  "Sports",
-  "Environment",
+  "Crime",
+  "Domestic",
   "Education",
-  "Travel",
+  "Entertainment",
+  "Environment",
+  "Food",
+  "Health",
   "Lifestyle",
-  "Opinion",
-  "Culture",
-  "Food"
+  "Other",
+  "Politics",
+  "Science",
+  "Sports",
+  "Technology",
+  "Top",
+  "Tourism",
+  "World"
 ];
-
