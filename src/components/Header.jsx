@@ -11,13 +11,13 @@ const Header = () => {
   const { theme } = useSelector((state) => state.theme);
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 flex items-center justify-between p-4 opacity-90">
+    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 flex items-center justify-between py-2 px-4 opacity-90">
       <div className="flex items-center">
         <a
           href="/"
           className="flex items-center focus:outline-none focus:ring-0"
         >
-          <img src={newslyLogo} className="h-8 filter dark:invert" alt="Newsly Logo" />
+          <img src={newslyLogo} className="h-6 filter dark:invert" alt="Newsly Logo" />
         </a>
       </div>
       <Button

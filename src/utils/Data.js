@@ -74,5 +74,6 @@ export const newsCategories = [
   "Technology",
   "Top",
   "Tourism",
-  "World"
+  "World",
+
 ];
