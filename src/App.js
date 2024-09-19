@@ -68,7 +68,7 @@ function App() {
           ))
         ) : (
           <div className="text-center text-2xl font-bold">
-            API is down! No news available
+            Fetching latest news...
           </div>
         )}
       </div>

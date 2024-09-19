@@ -9,6 +9,13 @@ const Card = (props) => {
 
   const [imageURL, setImageURL] = useState(defaultImage);
 
+  const truncateText = (text, maxWords) => {
+    if (!text) return "No description available";
+    const words = text.split(" ");
+    if (words.length <= maxWords) return text;
+    return words.slice(0, maxWords).join(" ") + "…";
+  };
+
   useEffect(() => {
     checkImageURL(props.img).then((isValid) => {
       setImageURL(isValid ? props.img : defaultImage);
@@ -36,7 +43,7 @@ const Card = (props) => {
         </div>
 
         <p className="mb-4 text-sm lg:text-base leading-relaxed text-gray-700 dark:text-gray-400">
-          {props.description || "No description available"}
+          {truncateText(props.description, 60)}
         </p>
         <a
           href={props.link}
