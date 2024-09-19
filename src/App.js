@@ -17,23 +17,35 @@ function App() {
 
   useEffect(() => {
     const loadNews = async () => {
-      const fetchedNews = await fetchNews(dispatch, category);
-      setNews(fetchedNews || []);
+      try {
+        const fetchedNews = await fetchNews(dispatch, category);
+        setNews(fetchedNews);
+      } catch (error) {
+        console.error("Failed to fetch news:", error);
+      }
     };
     loadNews();
   }, [category, dispatch]);
 
   const handleLoadMore = useCallback(() => {
     const loadNews = async () => {
-      const fetchedNews = await fetchNews(dispatch, category, nextPage);
-      setNews((prevNews) => [...prevNews, ...fetchedNews]);
+      try {
+        const fetchedNews = await fetchNews(dispatch, category, nextPage);
+        setNews((prevNews) => [...prevNews, ...fetchedNews]);
+      } catch (error) {
+        console.error("Failed to fetch more news:", error);
+      }
     };
     loadNews();
   }, [nextPage, category, dispatch]);
 
   const handleCategoryChange = async () => {
-    const fetchedNews = await fetchNews(dispatch, category);
-    setNews(fetchedNews);
+    try {
+      const fetchedNews = await fetchNews(dispatch, category);
+      setNews(fetchedNews);
+    } catch (error) {
+      console.error("Failed to fetch news for the new category:", error);
+    }
   };
 
   return (
@@ -41,18 +53,24 @@ function App() {
       <Header />
       <CategoryBar onCategoryChange={handleCategoryChange} />
       <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 gap-6">
-        {news.map((article, index) => (
-          <Card
-            key={index}
-            headline={article.title}
-            img={article.image_url}
-            description={article.description}
-            link={article.link}
-            sourceName={article.source_id}
-            sourceLink={article.source_url}
-            publishedAt={article.publishedAt}
-          />
-        ))}
+        {news && news.length > 0 ? (
+          news.map((article, index) => (
+            <Card
+              key={index}
+              headline={article.title}
+              img={article.image_url}
+              description={article.description}
+              link={article.link}
+              sourceName={article.source_id}
+              sourceLink={article.source_url}
+              publishedAt={article.publishedAt}
+            />
+          ))
+        ) : (
+          <div className="text-center text-2xl font-bold">
+            API is down! No news available
+          </div>
+        )}
       </div>
       <div className="text-center py-4">
         <button

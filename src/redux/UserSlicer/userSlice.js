@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  category: "all",
+  category: false,
   nextPage: 0,
   loading: false,
 };

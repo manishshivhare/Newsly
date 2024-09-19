@@ -26,6 +26,7 @@ const CategoryBar = ({ onCategoryChange }) => {
       }, 5000);
       return;
     }
+    
 
     dispatch(setCategory(category));
     if (onCategoryChange) onCategoryChange();
