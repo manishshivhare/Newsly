@@ -1,31 +1,45 @@
 import dayjs from "dayjs";
+import { useState, useEffect } from "react";
+import defaultImage from "../assets/defaultImage.jpg";
+import { checkImageURL } from "../utils/checkImageUrl";
 
 const Card = (props) => {
   const date = props.publishedAt;
   const formattedDate = dayjs(date).format("DD MMM YYYY [at] HH:mm");
 
+  // State to hold the image URL
+  const [imageURL, setImageURL] = useState(defaultImage);
+
+  useEffect(() => {
+    // Check if the image URL is valid
+    checkImageURL(props.img).then((isValid) => {
+      setImageURL(isValid ? props.img : defaultImage);
+    });
+  }, [props.img]);
+
   return (
-    <div className="flex flex-col lg:flex-row bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 transition-transform transform  max-w-full lg:max-w-4xl mx-auto">
+    <div className="relative flex flex-col lg:flex-row bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 transition-transform transform max-w-full lg:max-w-4xl mx-auto">
       {/* Image on top for mobile, on left for large screens */}
       <a href={props.link} className="flex-shrink-0 lg:w-64 w-full">
         <img
           className="rounded-t-lg lg:rounded-l-lg lg:rounded-tr-none w-full lg:h-full object-cover h-64"
-          src={props.img}
-          alt={props.headline || "News image"}
+          src={imageURL}
+          alt={props.headline || "No headline available"}
         />
       </a>
       {/* Content */}
       <div className="p-4 lg:p-6 flex-1">
         <a href={props.link} aria-label={props.headline}>
           <h5 className="mb-2 text-xl lg:text-2xl font-bold tracking-tight text-gray-700 dark:text-white">
-            {props.headline}
+            {props.headline || "No headline available"}
           </h5>
         </a>
         <div className="text-xs lg:text-sm text-gray-400 mb-2">
           Published on {formattedDate}
         </div>
-        <p className="mb-4 text-sm lg:text-base leading-relaxed text-gray-500 dark:text-gray-400">
-          {props.description}
+
+        <p className="mb-4 text-sm lg:text-base leading-relaxed text-gray-700 dark:text-gray-400">
+          {props.description || "No description available"}
         </p>
         <a
           href={props.link}
@@ -49,13 +63,15 @@ const Card = (props) => {
           </svg>
         </a>
       </div>
+
+      {/* Source */}
       <div className="absolute bottom-2 right-2 text-xs lg:text-sm text-gray-500 dark:text-gray-400">
-        <span>Source-</span>
+        <span>Source - </span>
         <a
           href={props.sourceLink}
           className="ml-1 text-[#53c1c0] hover:text-[#45b2a5] dark:text-blue-400 dark:hover:text-blue-300"
         >
-          {props.sourceName}
+          {props.sourceName || "Unknown"}
         </a>
       </div>
     </div>

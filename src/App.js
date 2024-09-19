@@ -1,56 +1,45 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
 import Card from "./components/CardBlock.jsx";
 import Header from "./components/Header.jsx";
-import dayjs from "dayjs";
 import CategoryBar from "./components/CategoryBar.jsx";
 import Footer from "./components/Footer.jsx";
 import ScrollToTopButton from "./components/ScrollToTop.jsx";
-import { useSelector } from "react-redux";
+import { fetchNews } from "./utils/fetchNews.js";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
   const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [customDate, setCustomDate] = useState(
-    dayjs().format("YYYY-MM-DDThh:mm:ss[Z]")
-  );
+  const dispatch = useDispatch();
+
+  const loading = useSelector((state) => state.user.loading).payload;
   const category = useSelector((state) => state.user.category).payload;
-  console.log(category);
-  const fetchNews = useCallback(async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(
-        `https://newsdata.io/api/1/latest?apikey=${process.env.REACT_APP_API_KEY}&category=${category}&language=en`
-      );
-
-      setNews((prevNews) => [...prevNews, ...data.results]);
-    } catch (error) {
-      console.error("Error fetching news:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [category]);
-
-  const handleLoadMore = useCallback(() => {
-    const newDate = dayjs(customDate)
-      .subtract(10, "days")
-      .format("YYYY-MM-DDThh:mm:ss[Z]");
-    setCustomDate(newDate);
-  }, [customDate]);
-
-  const handleCategoryChange = () => {
-    setNews([]); // Clear existing news
-    fetchNews();
-  };
+  const nextPage = useSelector((state) => state.user.nextPage).payload;
 
   useEffect(() => {
-    fetchNews();
-  }, [customDate, fetchNews]);
+    const loadNews = async () => {
+      const fetchedNews = await fetchNews(dispatch, category);
+      setNews(fetchedNews || []);
+    };
+    loadNews();
+  }, [category, dispatch]);
+
+  const handleLoadMore = useCallback(() => {
+    const loadNews = async () => {
+      const fetchedNews = await fetchNews(dispatch, category, nextPage);
+      setNews((prevNews) => [...prevNews, ...fetchedNews]);
+    };
+    loadNews();
+  }, [nextPage, category, dispatch]);
+
+  const handleCategoryChange = async () => {
+    const fetchedNews = await fetchNews(dispatch, category);
+    setNews(fetchedNews);
+  };
 
   return (
     <div>
       <Header />
-      <CategoryBar onCategoryChange={() => handleCategoryChange()} />
+      <CategoryBar onCategoryChange={handleCategoryChange} />
       <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-1 gap-6">
         {news.map((article, index) => (
           <Card
@@ -58,10 +47,11 @@ function App() {
             headline={article.title}
             img={article.image_url}
             description={article.description}
-            link={article.url}
+            link={article.link}
             sourceName={article.source_id}
             sourceLink={article.source_url}
             publishedAt={article.publishedAt}
+            category = {article.category}
           />
         ))}
       </div>

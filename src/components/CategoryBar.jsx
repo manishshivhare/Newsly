@@ -53,7 +53,7 @@ const CategoryBar = ({ onCategoryChange }) => {
   const scrollLeft = () => {
     if (categoryBarRef.current) {
       categoryBarRef.current.scrollBy({
-        left: -200,
+        left: -100,
         behavior: "smooth",
       });
     }
@@ -62,7 +62,7 @@ const CategoryBar = ({ onCategoryChange }) => {
   const scrollRight = () => {
     if (categoryBarRef.current) {
       categoryBarRef.current.scrollBy({
-        left: 200,
+        left: 100,
         behavior: "smooth",
       });
     }
