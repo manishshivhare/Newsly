@@ -7,7 +7,7 @@ export function checkImageURL(url) {
         };
         
         img.onerror = function() {
-            resolve(false);  // URL is invalid
+            resolve(false);  
         };
         
         img.src = url;

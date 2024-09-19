@@ -51,7 +51,6 @@ function App() {
             sourceName={article.source_id}
             sourceLink={article.source_url}
             publishedAt={article.publishedAt}
-            category = {article.category}
           />
         ))}
       </div>

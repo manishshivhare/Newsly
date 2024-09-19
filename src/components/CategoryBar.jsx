@@ -23,19 +23,18 @@ const CategoryBar = ({ onCategoryChange }) => {
       setTimeout(() => {
         setShowWarning(false);
         setLoading(false);
-      }, 5000); // Show warning for 5 seconds
+      }, 5000);
       return;
     }
 
     dispatch(setCategory(category));
     if (onCategoryChange) onCategoryChange();
 
-    // Activate timer
     setIsTimerActive(true);
 
     setTimeout(() => {
       setIsTimerActive(false);
-    }, 60000); // 1 minute timer
+    }, 60000);
   };
 
   const checkScrollPosition = () => {
