@@ -26,10 +26,13 @@ const CategoryBar = ({ onCategoryChange }) => {
       }, 5000);
       return;
     }
-    
 
-    dispatch(setCategory(category));
-    if (onCategoryChange) onCategoryChange();
+    if (category === "All") {
+      dispatch(setCategory(false));
+    } else {
+      dispatch(setCategory(category));
+      if (onCategoryChange) onCategoryChange();
+    }
 
     setIsTimerActive(true);
 
