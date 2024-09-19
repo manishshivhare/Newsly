@@ -29,7 +29,7 @@ const ScrollToTopButton = () => {
   return (
     isVisible && (
       <button
-        className="fixed bottom-5 right-5 bg-[#53c1c0] text-white rounded-full p-3 shadow-lg hover:bg-blue-700 focus:outline-none dark:bg-blue-500"
+        className="fixed bottom-5 right-5 bg-[#53c1c0] hover:bg-[#45b2a5]  text-white rounded-full p-3 shadow-lg dark:hover:bg-[#e13033] focus:outline-none dark:bg-[#c0474a]"
         onClick={scrollToTop}
       >
         <FaArrowUp />
