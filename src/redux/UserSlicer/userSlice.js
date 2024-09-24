@@ -4,6 +4,8 @@ const initialState = {
   category: false,
   nextPage: 0,
   loading: false,
+  country: "in",
+  language: "en",
 };
 
 const userSlice = createSlice({
@@ -19,9 +21,16 @@ const userSlice = createSlice({
     setLoading: (state, loading) => {
       state.loading = loading;
     },
+    setLanguage: (state, language) => {
+      state.language = language;
+    },
+    setCountry: (state, country) => {
+      state.country = country;
+    },
   },
 });
 
-export const { setCategory, setNextPage, setLoading } = userSlice.actions;
+export const { setCategory, setNextPage, setLoading, setCountry, setLanguage } =
+  userSlice.actions;
 
 export default userSlice.reducer;

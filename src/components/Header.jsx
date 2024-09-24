@@ -12,11 +12,14 @@ import PreferenceModal from "../components/PrefrenceModal";
 const Header = () => {
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.theme);
-  const [isOpen, setIsOpen] = useState(false); // Fix state management
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   return (
     <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between py-2 px-4 opacity-90">
-      {isOpen && <PreferenceModal handleClose={() => setIsOpen(false)} />} {/* Conditional Rendering */}
+      <PreferenceModal isOpen={isModalOpen} handleClose={handleCloseModal} />
       
       <div className="flex items-center gap-5">
         <a href="/" className="flex items-center focus:outline-none focus:ring-0">
@@ -26,9 +29,11 @@ const Header = () => {
       </div>
       
       <div className="flex gap-2">
-        <Button className="w-10 h-8 border-none rounded-full focus:outline-none focus:ring-0">
+        <Button 
+          className="w-10 h-8 border-none rounded-full focus:outline-none focus:ring-0"
+          onClick={handleOpenModal}
+        >
           <IoMdSettings
-            onClick={() => setIsOpen(true)} 
             className="w-6 h-6 hover:text-[#53c1c0] dark:hover:text-[#c0474a] text-gray-600 dark:text-gray-300"
           />
         </Button>
